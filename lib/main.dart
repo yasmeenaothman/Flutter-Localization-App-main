@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:localization_app/App/constants.dart';
+import 'package:localization_app/App/shared_preference_helper.dart';
 import 'package:localization_app/getX/controllers/locale_controller.dart';
 import 'package:get/get.dart';
 import 'Localization/app_localization.dart';
 import 'getX/views/page/localization_app_page.dart';
 
 
-void main() {
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferenceHelper.init();
   runApp(  MyApp());
 }
 
@@ -14,12 +18,15 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
   final controller = Get.put(LocaleController());
+  final languageCode = SharedPreferenceHelper.getString(Constants.languageCode);
   static GlobalKey<NavigatorState> navigatorKey =
   GlobalKey<NavigatorState>();
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) =>
-      GetX<LocaleController>(
+  Widget build(BuildContext context) {
+    controller.setLocale(Locale(languageCode??'en'));
+
+    return GetX<LocaleController>(
         builder: (LocaleController localeController)=>MaterialApp(
           navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
@@ -34,6 +41,7 @@ class MyApp extends StatelessWidget {
           home: MainPage(),
         ),
       );
+  }
 }
 
 class MainPage extends StatefulWidget {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:localization_app/App/constants.dart';
+import 'package:localization_app/App/shared_preference_helper.dart';
 
 import '../../../l10n/l10n.dart';
 import '../../controllers/locale_controller.dart';
